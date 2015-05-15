@@ -2,7 +2,6 @@ extends layout
 
 block content
 	div(ng-controller="StockController")
-		ul
-			li(ng-repeat="stock in stocks").
-				<stockItem></stockItem>
+			div.row(ng-repeat="stock in stocks" stockitem="stock")
+				
 				

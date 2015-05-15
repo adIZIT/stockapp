@@ -8,7 +8,8 @@ var stockSchema = new Schema({
 	entryPrice: Number,
 	quantity: Number,
 	brokerFee: Number,
-	tax: Number
+	tax: Number,
+	investmentDate: Date
 });
 
 module.exports = mongoose.model('Stock', stockSchema);

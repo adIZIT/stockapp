@@ -21,9 +21,12 @@ app.controller('StockController', function($scope, StockService) {
 	});
 });
 
-app.directive('stockItem', function() {
+app.directive('stockitem', function() {
 	return {
-		restrict: 'E',
-		template: 'Code: {{stock.code}}'
+		scope: {
+			stock: '=stockitem'	
+		},
+		restrict: 'EA',
+		templateUrl: 'views/stockitem.html'
 	};
 });
