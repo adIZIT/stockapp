@@ -1,0 +1,25 @@
+﻿db.transactions.aggregate( 
+	[ 
+		{ 
+			$group: { 
+				code: {code}, 
+				totalShares: { $sum: "numberOfShares" } 
+			} 
+		} 
+	] 
+)
+
+
+db.transactions.aggregate( 
+	[ 
+		{ 
+			$group: { 
+				_id: "$code", 
+				totalShares: { $sum: "$numberOfShares" }, 
+				totalTaxCost: { $sum: "$taxValue" },
+				totalCost: { $sum: { $add: ["$taxValue", "$brokerFee"] } },
+				totalSharesPrice: { $sum: { $multiply: ["$numberOfShares", "$entryPrice"] } }
+			} 
+		} 
+	] 
+)
