@@ -2,6 +2,24 @@ extends layout
 
 block content
 	div(ng-controller="StockController")
-			div.row(ng-repeat="stock in stocks" stockitem="stock")
+		table
+			tr
+				th Code
+				th Type
+				th Eenheidsprijs
+				th Aantal				
+				th Tax
+				th Broker kost
+				th Totaal
+			tr(ng-repeat="stock in stocks" stockitem="stock")
+	
+	div(ng-controller="TransactionsController")
+		table
+			tr
+				th Code
+				th Number of shares
+				th Total Cost
+				th Total
+			
 				
 				

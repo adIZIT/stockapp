@@ -30,3 +30,19 @@ app.directive('stockitem', function() {
 		templateUrl: 'views/stockitem.html'
 	};
 });
+
+app.service('TransactionService', function($http) {
+	var getAll = function() {
+		return $http.get('http://localhost:3000/api/transactions').then(function(response) {
+			return response.data;
+		});
+	}
+	return { getAll: getAll };
+});
+
+app.controller('TransactionsController', function($scope, TransactionService) {
+	var myData = TransactionService.getAll();
+	myData.then(function(result) {
+		$scope.transactions = result;
+	});
+});

@@ -1,20 +1,22 @@
-<div class="row">
-	<div class="large-2 columns">
+
+	<td>
 		{{stock.code}}
-	</div>
-	<div class="large-2 columns">
-		{{stock.entryPrice}}
-	</div>
-	<div class="large-2 columns">
+	</td>
+	<td>
+		{{stock.transactionType}}
+	</td>
+	<td>
+		€{{stock.entryPrice}}
+	</td>
+	<td>
 		{{stock.quantity}}
-	</div>
-	<div class="large-2 columns">
-		{{stock.tax}}
-	</div>
-	<div class="large-2 columns">
-		{{stock.brokerFee}}
-	</div>
-	<div class="large-2 columns">
-		{{stock.quantity * stock.entryPrice}}
-	</div>
-</div>
+	</td>
+	<td>
+		{{stock.tax}}%
+	</td>
+	<td>
+		€{{stock.brokerFee}}
+	</td>
+	<td>
+		€{{stock.quantity * stock.entryPrice}}
+	</td>

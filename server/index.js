@@ -6,6 +6,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var stocks = require('./routes/stocks');
+var transactions = require('./routes/transactions');
 
 // Express application initialize
 var app = express();
@@ -30,6 +31,7 @@ app.use('/', function(req, res, next) {
 
 // Register routes with /api
 app.use('/api', stocks);
+app.use('/api', transactions);
 
 var server = app.listen(3000, function() {
 	console.log('Express server listening on port ' + server.address().port);
