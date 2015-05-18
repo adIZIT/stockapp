@@ -18,8 +18,32 @@ block content
 			tr
 				th Code
 				th Number of shares
+				th Total Tax Cost
 				th Total Cost
 				th Total
-			
-				
-				
+			tr(ng-repeat="transaction in transactions")
+				td {{transaction._id}}
+				td {{transaction.totalShares}}
+				td €{{transaction.totalTaxCost}}
+				td €{{transaction.totalCost}}
+				td €{{transaction.totalSharesPrice}}
+		form(ng-submit='add()')
+			label Code           
+			input.form-control(type='text', name='code', placeholder='Code', ng-model='transaction.code')
+			br
+			label Type           
+			input.form-control(type='text', name='type', placeholder='Type', ng-model='transaction.type')
+			br
+			label Eenheidsprijs           
+			input.form-control(type='text', name='entryPrice', placeholder='0', ng-model='transaction.entryPrice')
+			br
+			label Aantal           
+			input.form-control(type='text', name='numberOfShares', placeholder='0', ng-model='transaction.numberOfShares')
+			br
+			label Tax           
+			input.form-control(type='text', name='tax', placeholder='0', ng-model='transaction.tax')
+			br
+			label Broker cost           
+			input.form-control(type='text', name='brokerFee', placeholder='0', ng-model='transaction.brokerFee')
+			br
+			button(type='submit') submit

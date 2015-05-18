@@ -33,11 +33,21 @@ app.directive('stockitem', function() {
 
 app.service('TransactionService', function($http) {
 	var getAll = function() {
-		return $http.get('http://localhost:3000/api/transactions').then(function(response) {
+		return $http.get('http://localhost:3000/api/transactionsoverview').then(function(response) {
 			return response.data;
 		});
 	}
-	return { getAll: getAll };
+	
+	var add = function(transaction) {
+		return $http.post('http://localhost:3000/api/transactions', transaction).then(function(response) {
+			return response.data;
+		});	
+	};
+	
+	return { 
+		getAll: getAll,
+		add: add 
+	};
 });
 
 app.controller('TransactionsController', function($scope, TransactionService) {
@@ -45,4 +55,9 @@ app.controller('TransactionsController', function($scope, TransactionService) {
 	myData.then(function(result) {
 		$scope.transactions = result;
 	});
+	
+	$scope.add = function(result) {
+		console.log($scope.transaction);
+		TransactionService.add($scope.transaction);	
+	};
 });

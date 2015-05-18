@@ -8,28 +8,13 @@ var router = express.Router();
 // Geeft een lijst van alle transacties terug
 router.route('/transactions').get(function(req, res) {	
 	console.log('GET /transactions/');
- 	
-	Transaction.aggregate([
-		{ $group: {
-			_id: "$code",
-			totalShares: { $sum: "$numberOfShares" },
-			totalTaxCost: { $sum: "$taxValue" },
-			totalCost: { $sum: { $add: [ "$taxValue", "$brokerFee" ] } },
-			totalSharesPrice: { $sum: { $multiply: ["$numberOfShares", "$entryPrice"] } }
-		}}
-	], function(err, result) {
+
+	Transaction.find(req.query, function(err, transactions) {
 		if (err) {
 			return res.send(err);
 		}
-		res.json(result);
+		res.json(transactions);
 	});
-	 
-//	Transaction.find(req.query, function(err, transactions) {
-//		if (err) {
-//			return res.send(err);
-//		}
-//		res.json(transactions);
-//	});
 });
 
 // POST: /transactions/
@@ -88,6 +73,24 @@ router.route('/transactions/:id').delete(function(req, res) {
 				return res.send(err);
 			}
 			res.json({ message: 'delete transaction' });
+	});
+});
+
+router.route('/transactionsoverview').get(function(req, res) {
+	console.log('/transactions/?overview');	 	
+	Transaction.aggregate([
+		{ $group: {
+			_id: "$code",
+			totalShares: { $sum: "$numberOfShares" },
+			totalTaxCost: { $sum: "$taxValue" },
+			totalCost: { $sum: { $add: [ "$taxValue", "$brokerFee" ] } },
+			totalSharesPrice: { $sum: { $multiply: ["$numberOfShares", "$entryPrice"] } }
+		}}
+	], function(err, result) {
+		if (err) {
+			return res.send(err);
+		}
+		res.json(result);
 	});
 });
 
