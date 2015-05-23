@@ -44,7 +44,7 @@ nav.menu ul {
 	margin:0;
 }
 
-.container
+.container2
 {
 	position:absolute;
 	margin-left:200px;
@@ -54,12 +54,21 @@ nav.menu ul {
 }
 
 .contentHeader {
-	width: 100%;
+	width: calc(100% - 200px);
 	position:fixed;
 	height:61px;
 	background:#fff;
-	z-index:3000;
+/*	z-index:3000;*/
 	border-bottom:1px solid #e6e6e6;
+}
+
+.contentHeader .box
+{
+	height: 100%;
+	border-left:1px solid #e6e6e6;
+	float:right;
+	padding: 0px 30px 0px 30px;
+	line-height: 56px;
 }
 
 .content {

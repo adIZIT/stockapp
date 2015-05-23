@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="stockApp">
 	<head>
 		<title>Transactions</title>
+		<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js'></script>
+		<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
+		<script src='../app.js'></script>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css' />
-		<link rel="stylesheet" href="styles/foundation-essentials-5.5.2/css/foundation.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="styles/style.css" />
+		
 	</head>
 	<body>
 		<div class="sidebar">
@@ -17,44 +21,38 @@
 			</nav>
 		</div>
 		
-		<div class="container">				
+		<div class="container2" ng-controller="TransactionsController">				
 			<div class="contentHeader">
-				header - test
+				<div class="box">
+					<button type="button" class="btn btn-primary" ng-click="open()">Transactie toevoegen</button>	
+				</div>				
+				<div class="box">
+					Overall: €250
+				</div>
+				<div class="box">
+					Today: €24
+				</div>
 			</div>
 			<div class="content">
 				<div class="row fullWidth">
-					<div class="large-4 columns">
+					<div class="col-md-4">
 						<div class="blockitem">
-							test
+							<sa-transaction-quantity></sa-transaction-quantity>
 						</div>						
 					</div>
-					<div class="large-4 columns">
+					<div class="col-md-4">
 						<div class="blockitem">
 							test
 						</div>
 					</div>
-					<div class="large-4 columns">
+					<div class="col-md-4">
 						<div class="blockitem">
 							test
 						</div>
 					</div>
 				</div>
 				<div class="row fullWidth">
-					<div class="large-4 columns">
-						<div class="blockitem">
-							test
-						</div>						
-					</div>
-					<div class="large-4 columns">
-						<div class="blockitem">
-							test
-						</div>
-					</div>
-					<div class="large-4 columns">
-						<div class="blockitem">
-							test
-						</div>
-					</div>
+					
 				</div>
 			</div>								
 		</div>

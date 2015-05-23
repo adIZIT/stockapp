@@ -1,6 +1,6 @@
 /// <reference path="typings/angularjs/angular.d.ts" />
 
-var app = angular.module('stockApp', []);
+var app = angular.module('stockApp', ['ui.bootstrap']);
 
 app.service('StockService', function($http) {
 	var getAll = function() {
@@ -36,7 +36,7 @@ app.service('TransactionService', function($http) {
 		return $http.get('http://localhost:3000/api/transactionsoverview').then(function(response) {
 			return response.data;
 		});
-	}
+	};
 	
 	var add = function(transaction) {
 		return $http.post('http://localhost:3000/api/transactions', transaction).then(function(response) {
@@ -44,13 +44,18 @@ app.service('TransactionService', function($http) {
 		});	
 	};
 	
+	var getNumberOfTransactions = function() {
+		return 6;
+	};
+	
 	return { 
 		getAll: getAll,
-		add: add 
+		add: add,
+		getNumberOfTransactions: getNumberOfTransactions
 	};
 });
 
-app.controller('TransactionsController', function($scope, TransactionService) {
+app.controller('TransactionsController', function($scope, $modal, TransactionService) {
 	var myData = TransactionService.getAll();
 	myData.then(function(result) {
 		$scope.transactions = result;
@@ -60,4 +65,38 @@ app.controller('TransactionsController', function($scope, TransactionService) {
 		console.log($scope.transaction);
 		TransactionService.add($scope.transaction);	
 	};
+	
+	$scope.open = function(size) {
+		var modalInstance = $modal.open({
+			animation: true,
+			templateUrl: 'views/myModal.html',
+			controller: 'ModalInstanceController',
+			size: size		
+		});	
+		
+		modalInstance.result.then(function(transaction) {
+			TransactionService.add(transaction);	
+		});
+		
+	};
+	
+	var q = TransactionService.getNumberOfTransactions();
+	$scope.quantity = q;
+});
+
+app.directive('saTransactionQuantity', function() {
+	return {
+		restrict: 'EA',
+		template: '<p>Aantal: {{ quantity }}</p>',	
+	};
+});
+
+app.controller('ModalInstanceController', function($scope, $modalInstance) {
+	// Transactie object initialiseren
+	$scope.transaction = {};
+	
+	// Als er OK geklikt wordt dan wordt het transactie object teruggegeven
+	$scope.ok = function() {		
+		$modalInstance.close($scope.transaction);
+	}
 });
