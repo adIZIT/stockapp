@@ -10,7 +10,11 @@ var transactionSchema = new Schema({
 	brokerFee: Number,		// Kost die moet betaald worden aan de broker
 	taxPercentage: Number,	// BTW percentage dat op de aankoop/verkoop moet worden aangerekend
 	taxValue: Number,		// De waarde van de BTW kost
-	transactionDate: Date,	// Datum waarop de transactie uitgevoerd geweest is
+	// Datum waarop de transactie uitgevoerd geweest is
+	transactionDate: {
+		type: Date,
+		default: Date.now
+	},	
 	transactionType: String,// Type transactie: Buy, Sell
 	notes: String,			// Notities bij de transactie
 	currency: String,		// Indien de aandelen met een andere munt verhandeld worden 

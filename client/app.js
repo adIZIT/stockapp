@@ -1,6 +1,6 @@
 /// <reference path="typings/angularjs/angular.d.ts" />
 
-var app = angular.module('stockApp', ['ui.bootstrap']);
+var app = angular.module('stockApp', ['ui.bootstrap', 'smart-table']);
 
 app.service('StockService', function($http) {
 	var getAll = function() {
@@ -33,7 +33,7 @@ app.directive('stockitem', function() {
 
 app.service('TransactionService', function($http) {
 	var getAll = function() {
-		return $http.get('http://localhost:3000/api/transactionsoverview').then(function(response) {
+		return $http.get('http://localhost:3000/api/transactions').then(function(response) {
 			return response.data;
 		});
 	};
@@ -74,8 +74,9 @@ app.controller('TransactionsController', function($scope, $modal, TransactionSer
 			size: size		
 		});	
 		
-		modalInstance.result.then(function(transaction) {
+		modalInstance.result.then(function(transaction) {			
 			TransactionService.add(transaction);	
+			$scope.transactions.push(transaction);
 		});
 		
 	};
@@ -99,4 +100,14 @@ app.controller('ModalInstanceController', function($scope, $modalInstance) {
 	$scope.ok = function() {		
 		$modalInstance.close($scope.transaction);
 	}
+});
+
+app.filter('buyselltotal', function() {
+	return function(transaction) {
+		var t = (transaction.entryPrice * transaction.numberOfShares) + transaction.brokerFee + ((transaction.entryPrice * transaction.numberOfShares) * (transaction.taxPercentage / 100));
+		if (transaction.transactionType == 'Buy') {
+			return 0 - t;
+		}
+		return t;
+	};
 });

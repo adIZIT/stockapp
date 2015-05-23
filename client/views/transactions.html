@@ -8,6 +8,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css' />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="styles/style.css" />
+		<script src="../node_modules/angular-smart-table/dist/smart-table.js"></script>
 		
 	</head>
 	<body>
@@ -34,7 +35,7 @@
 				</div>
 			</div>
 			<div class="content">
-				<div class="row fullWidth">
+<!--				<div class="row fullWidth">
 					<div class="col-md-4">
 						<div class="blockitem">
 							<sa-transaction-quantity></sa-transaction-quantity>
@@ -50,9 +51,35 @@
 							test
 						</div>
 					</div>
-				</div>
+				</div>-->
 				<div class="row fullWidth">
-					
+					<table st-table="transactions" class="table table-striped">
+						<thead>
+							<tr>
+								<th>Transaction date</th>
+								<th>Code</th>
+								<th>Type</th>
+								<th>Number of shares</th>
+								<th>Entry price</th>
+								<th>Broker fee</th>
+								<th>Tax percentage</th>	
+								<th>Total investment/return</th>							
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="transaction in transactions">
+								<td>{{ transaction.transactionDate }}</td>
+								<td>{{ transaction.code }}</td>
+								<td>{{ transaction.transactionType }}</td>
+								<td>{{ transaction.numberOfShares }}</td>
+								<td>€{{ transaction.entryPrice | number: 2 }}</td>
+								<td>€{{ transaction.brokerFee | number: 2 }}</td>
+								<td>{{ transaction.taxPercentage | number: 2 }}%</td>
+								<td>{{ transaction | buyselltotal | number: 2 }}</td>
+<!--								<td>€{{ (transaction.entryPrice * transaction.numberOfShares) + transaction.brokerFee + ((transaction.entryPrice * transaction.numberOfShares) * (transaction.taxPercentage / 100)) | number: 2 }}</td>-->
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>								
 		</div>
