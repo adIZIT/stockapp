@@ -63,7 +63,8 @@
 								<th>Entry price</th>
 								<th>Broker fee</th>
 								<th>Tax percentage</th>	
-								<th>Total investment/return</th>							
+								<th>Total investment/return</th>
+								<th></th>							
 							</tr>
 						</thead>
 						<tbody>
@@ -76,6 +77,14 @@
 								<td>€{{ transaction.brokerFee | number: 2 }}</td>
 								<td>{{ transaction.taxPercentage | number: 2 }}%</td>
 								<td>{{ transaction | buyselltotal | number: 2 }}</td>
+								<td>
+									<button type="button" class="btn btn-default" aria-label="Delete transaction" ng-click="delete(transaction)">
+ 	 									<span class="glyphicon glyphicon-remove" aria-hidden="false"></span>
+									</button>
+									<button type="button" class="btn btn-default" aria-label="Edit transaction" ng-click="editTransaction(transaction)">
+ 	 									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+									</button>
+								</td>
 <!--								<td>€{{ (transaction.entryPrice * transaction.numberOfShares) + transaction.brokerFee + ((transaction.entryPrice * transaction.numberOfShares) * (transaction.taxPercentage / 100)) | number: 2 }}</td>-->
 							</tr>
 						</tbody>

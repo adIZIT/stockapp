@@ -65,6 +65,8 @@ router.route('/transactions/:id').get(function(req, res) {
 // DELETE: /transactions/:id
 // Verwijderen van een transaction object a.d.h.v. het unieke ID
 router.route('/transactions/:id').delete(function(req, res) {
+	console.log('Delete transaction');
+	console.log('Ttransaction id: ' + req.params.id);
 	Transaction.remove({ 
 		_id: req.params.id 
 		}, 
@@ -72,7 +74,7 @@ router.route('/transactions/:id').delete(function(req, res) {
 			if (err) {
 				return res.send(err);
 			}
-			res.json({ message: 'delete transaction' });
+			res.json({ message: 'deleted transaction' });
 	});
 });
 

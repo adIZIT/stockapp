@@ -44,6 +44,15 @@ app.service('TransactionService', function($http) {
 		});	
 	};
 	
+	var remove = function(transaction) {
+		console.log('TransactionService.remove');
+		console.log('Transaction ID to remove: ' + transaction._id);
+		return $http.delete('http://localhost:3000/api/transactions/' + transaction._id).then(function(response) {
+			console.log('1');
+			return response.data;
+		});
+	};
+	
 	var getNumberOfTransactions = function() {
 		return 6;
 	};
@@ -51,6 +60,7 @@ app.service('TransactionService', function($http) {
 	return { 
 		getAll: getAll,
 		add: add,
+		remove: remove,
 		getNumberOfTransactions: getNumberOfTransactions
 	};
 });
@@ -77,8 +87,41 @@ app.controller('TransactionsController', function($scope, $modal, TransactionSer
 		modalInstance.result.then(function(transaction) {			
 			TransactionService.add(transaction);	
 			$scope.transactions.push(transaction);
-		});
+		});		
+	};
+	
+	$scope.editTransaction = function(transaction) {
+		console.log('editTransactionModel');
+		console.log($scope.transaction);
+		console.log(transaction);
+		var modalInstance = $modal.open({
+			animation: true,
+			templateUrl: 'views/edit-transaction-modal.html',
+			controller: 'EditTransactionModalController',
+			resolve: {
+				transaction: function() {
+					return transaction;
+				}			
+			}		
+		});	
 		
+		modalInstance.result.then(function(transaction) {			
+			TransactionService.update(transaction);	
+			$scope.transactions.pull(transaction);
+		});		
+	};
+	
+	$scope.edit = function(transaction) {
+		console.log('edit transaction');
+		console.log(transaction);		
+	};
+	
+	$scope.delete = function(transaction) {
+		console.log('delete transaction');
+		console.log(transaction);	
+		if (confirm("Are you sure you want to delete the transaction?")) {
+			TransactionService.remove(transaction);
+		}
 	};
 	
 	var q = TransactionService.getNumberOfTransactions();
@@ -99,7 +142,19 @@ app.controller('ModalInstanceController', function($scope, $modalInstance) {
 	// Als er OK geklikt wordt dan wordt het transactie object teruggegeven
 	$scope.ok = function() {		
 		$modalInstance.close($scope.transaction);
-	}
+	};
+});
+
+app.controller('EditTransactionModalController', function($scope, $modalInstance, transaction) {
+	// Transactie object initialiseren
+	console.log($scope.transaction);
+	console.log(transaction);
+	$scope.transaction = transaction;
+	
+	// Als er OK geklikt wordt dan wordt het transactie object teruggegeven
+	$scope.ok = function() {		
+		$modalInstance.close($scope.transaction);
+	};
 });
 
 app.filter('buyselltotal', function() {
